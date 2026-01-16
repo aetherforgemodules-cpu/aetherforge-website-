@@ -8,14 +8,52 @@ body {
   background: #05060a;
   color: #d0d4e4;
   font-family: Arial, sans-serif;
-  margin: 40px auto;
-  max-width: 900px;
+  margin: 0;
+  padding: 0;
   line-height: 1.6;
 }
-h1 {
-  font-size: 48px;
+
+/* NAVIGATION */
+nav {
+  background: rgba(0, 20, 40, 0.7);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #00eaff;
+}
+nav a {
   color: #7df9ff;
-  text-shadow: 0 0 12px #00eaff;
+  margin-left: 20px;
+  text-decoration: none;
+  font-size: 16px;
+}
+nav a:hover {
+  text-shadow: 0 0 8px #00eaff;
+}
+
+/* HERO SECTION */
+.hero {
+  text-align: center;
+  padding: 120px 20px 80px;
+}
+.hero h1 {
+  font-size: 60px;
+  color: #7df9ff;
+  text-shadow: 0 0 20px #00eaff;
+}
+.hero p {
+  font-size: 22px;
+  color: #b8c6ff;
+  max-width: 700px;
+  margin: 20px auto 0;
+}
+
+/* CONTENT */
+.container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 0 20px;
 }
 h2 {
   margin-top: 40px;
@@ -23,15 +61,30 @@ h2 {
   border-left: 4px solid #00eaff;
   padding-left: 10px;
 }
-a { color: #7df9ff; }
 </style>
 </head>
 <body>
 
-<h1>Aetherforge</h1>
-<h3>The AI Infrastructure Universe</h3>
+<!-- NAVIGATION -->
+<nav>
+  <div style="color:#7df9ff; font-size:20px; font-weight:bold;">Aetherforge</div>
+  <div>
+    <a href="#">Research</a>
+    <a href="#">App</a>
+    <a href="#">Teacher</a>
+    <a href="#">Simulations</a>
+    <a href="#">Contact</a>
+  </div>
+</nav>
 
-<p>AI‑powered infrastructure for research, education, and simulation—built for labs, schools, and creators.</p>
+<!-- HERO -->
+<div class="hero">
+  <h1>The AI Infrastructure Universe</h1>
+  <p>Build, explore, and govern intelligent systems across research, education, and simulation.</p>
+</div>
+
+<!-- MAIN CONTENT -->
+<div class="container">
 
 <h2>Research Platform</h2>
 <p>Reproducible workflows, structured hypotheses, experiment lineage, model registry, and knowledge graphs.</p>
@@ -47,6 +100,8 @@ a { color: #7df9ff; }
 
 <h2>Contact</h2>
 <p>Email: aetherforge.modules@gmail.com</p>
+
+</div>
 
 </body>
 </html>
