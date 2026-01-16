@@ -1,5 +1,11 @@
 <!DOCTYPE html>
 <html>
+ <body class="neon-mode">
+ <div id="metal-bg"></div>
+<div id="hex-grid"></div>
+<canvas id="particles"></canvas>
+ <div id="hex-grid"></div>
+<canvas id="particles"></canvas>  
 <head>
 <title>Aetherforge — The AI Infrastructure Universe</title>
 <meta charset="UTF-8">
@@ -38,12 +44,40 @@ body {
 }
 
 /* BACKGROUND LAYERS */
-#hex-grid {
+/* ANIMATED HEX GRID BACKGROUND */
+/* METALLIC BLUE BRUSHED STEEL BACKGROUND */
+#metal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -4;
+  background: radial-gradient(circle at center,
+      rgba(77, 166, 255, 0.25) 0%,
+      rgba(10, 20, 40, 0.9) 40%,
+      rgba(5, 8, 15, 1) 100%);
+  background-blend-mode: overlay;
+  filter: blur(0.5px) brightness(1.15);
+}
+  
+  #hex-grid {
   position: fixed;
   inset: 0;
   z-index: -3;
-  background: radial-gradient(circle at top, #0a1025 0%, #05060a 55%, #020308 100%);
-  opacity: 0.7;
+  background:
+    linear-gradient(120deg, rgba(77,166,255,0.12) 1px, transparent 1px),
+    linear-gradient(60deg, rgba(77,166,255,0.12) 1px, transparent 1px),
+    radial-gradient(circle at top, #0a1025 0%, #05060a 55%, #020308 100%);
+  background-size: 40px 70px, 40px 70px, cover;
+  animation: hexMove 12s linear infinite;
+  opacity: 0.55;
+}
+
+@keyframes hexMove {
+  0% {
+    background-position: 0px 0px, 0px 0px, center;
+  }
+  100% {
+    background-position: 80px 140px, -80px -140px, center;
+  }
 }
 #particles {
   position: fixed;
