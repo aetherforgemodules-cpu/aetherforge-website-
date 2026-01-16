@@ -1,16 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Aetherforge — Dark Sci‑Fi</title>
+<title>Aetherforge — The AI Infrastructure Universe</title>
 <meta charset="UTF-8">
 <style>
+:root {
+  --bg-deep: #05060a;
+  --bg-panel: rgba(5, 10, 25, 0.9);
+  --metal-blue: #4da6ff;
+  --metal-blue-soft: #66c2ff;
+  --metal-blue-light: #a8cfff;
+  --text-main: #d0d4e4;
+  --text-soft: #a8cfff;
+  --accent-neon: #4da6ff;
+  --accent-neon-soft: rgba(77, 166, 255, 0.4);
+}
+
+body.neon-mode {
+  --bg-deep: #05060a;
+  --bg-panel: rgba(5, 10, 35, 0.95);
+  --accent-neon: #66c2ff;
+  --accent-neon-soft: rgba(102, 194, 255, 0.6);
+}
+
 /* GLOBAL */
 html {
   scroll-behavior: smooth;
 }
 body {
-  background: #05060a;
-  color: #d0d4e4;
+  background: var(--bg-deep);
+  color: var(--text-main);
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
@@ -18,59 +37,113 @@ body {
   overflow-x: hidden;
 }
 
-/* PARTICLE BACKGROUND */
+/* BACKGROUND LAYERS */
+#hex-grid {
+  position: fixed;
+  inset: 0;
+  z-index: -3;
+  background: radial-gradient(circle at top, #0a1025 0%, #05060a 55%, #020308 100%);
+  opacity: 0.7;
+}
 #particles {
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  inset: 0;
+  z-index: -2;
   pointer-events: none;
-  z-index: -1;
-  background: radial-gradient(circle at center, #0a0f1f 0%, #05060a 80%);
 }
 
 /* NAVIGATION */
 nav {
   position: sticky;
   top: 0;
-  z-index: 10;
-  background: rgba(0, 20, 40, 0.7);
-  padding: 20px 40px;
+  z-index: 20;
+  background: rgba(0, 10, 25, 0.85);
+  padding: 14px 40px;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #00eaff;
-  backdrop-filter: blur(6px);
+  border-bottom: 1px solid var(--accent-neon);
+  backdrop-filter: blur(10px);
   transition: 0.3s;
 }
 nav.scrolled {
-  background: rgba(0, 20, 40, 0.9);
-  box-shadow: 0 0 20px rgba(0, 234, 255, 0.3);
+  background: rgba(0, 10, 25, 0.96);
+  box-shadow: 0 0 20px var(--accent-neon-soft);
+}
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  border: 2px solid var(--accent-neon);
+  box-shadow: 0 0 12px var(--accent-neon-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--metal-blue-soft);
+}
+.logo-text {
+  font-size: 20px;
+  font-weight: bold;
+  color: var(--metal-blue-soft);
 }
 nav a {
-  color: #7df9ff;
+  color: var(--metal-blue-soft);
   margin-left: 20px;
   text-decoration: none;
-  font-size: 16px;
+  font-size: 15px;
 }
 nav a:hover {
-  text-shadow: 0 0 8px #00eaff;
+  text-shadow: 0 0 8px var(--accent-neon);
+}
+.toggle-btn {
+  border: 1px solid var(--accent-neon);
+  background: transparent;
+  color: var(--metal-blue-soft);
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: 12px;
+}
+.toggle-btn:hover {
+  box-shadow: 0 0 10px var(--accent-neon-soft);
 }
 
 /* HERO */
+.hero-wrap {
+  position: relative;
+  overflow: hidden;
+}
 .hero {
   text-align: center;
-  padding: 140px 20px 100px;
+  padding: 140px 20px 110px;
+  transform-style: preserve-3d;
+  perspective: 1000px;
 }
 .hero h1 {
   font-size: 60px;
-  color: #7df9ff;
-  text-shadow: 0 0 20px #00eaff;
+  color: var(--metal-blue-soft);
+  text-shadow: 0 0 20px var(--accent-neon);
+  transform: translateZ(40px);
 }
 .hero p {
   font-size: 22px;
-  color: #b8c6ff;
-  max-width: 700px;
+  color: var(--text-soft);
+  max-width: 720px;
   margin: 20px auto 0;
+  transform: translateZ(20px);
+}
+.hero-tagline {
+  margin-top: 18px;
+  font-size: 14px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--metal-blue-light);
 }
 
 /* ENERGY PULSE */
@@ -78,7 +151,7 @@ nav a:hover {
   width: 260px;
   height: 4px;
   margin: 40px auto;
-  background: linear-gradient(90deg, transparent, #00eaff, transparent);
+  background: linear-gradient(90deg, transparent, var(--accent-neon), transparent);
   animation: pulse 2.5s infinite;
 }
 @keyframes pulse {
@@ -87,85 +160,278 @@ nav a:hover {
   100% { opacity: 0.2; }
 }
 
-/* GLASS PANELS */
-.section {
-  max-width: 1100px;
-  margin: 60px auto;
-  padding: 40px;
-  background: rgba(0, 30, 50, 0.25);
-  border: 1px solid rgba(0, 234, 255, 0.3);
-  border-radius: 12px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 0 20px rgba(0, 234, 255, 0.15);
+/* LAYOUT */
+.main-wrap {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
+}
+
+/* PANELS */
+.section-panel {
+  background: var(--bg-panel);
+  border: 1px solid rgba(77, 166, 255, 0.3);
+  border-radius: 14px;
+  padding: 32px;
+  margin-top: 40px;
+  box-shadow: 0 0 20px rgba(77, 166, 255, 0.18);
+  backdrop-filter: blur(10px);
   transition: 0.3s;
 }
-.section:hover {
-  box-shadow: 0 0 30px rgba(0, 234, 255, 0.4);
+.section-panel:hover {
+  box-shadow: 0 0 30px rgba(77, 166, 255, 0.4);
   transform: translateY(-4px);
 }
-.section h2 {
-  color: #7df9ff;
+.section-panel h2 {
   margin-top: 0;
+  color: var(--metal-blue-soft);
+}
+
+/* MODULE GRID */
+.module-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 24px;
+  margin-top: 20px;
+}
+.module-card {
+  background: rgba(5, 15, 35, 0.9);
+  border-radius: 12px;
+  border: 1px solid rgba(77, 166, 255, 0.4);
+  padding: 20px;
+  box-shadow: 0 0 14px rgba(77, 166, 255, 0.25);
+  transition: 0.25s;
+}
+.module-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 0 22px rgba(77, 166, 255, 0.5);
+}
+.module-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 2px solid var(--accent-neon);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+  font-size: 16px;
+  color: var(--metal-blue-soft);
+  box-shadow: 0 0 10px var(--accent-neon-soft);
+}
+.module-title {
+  font-weight: bold;
+  color: var(--metal-blue-soft);
+  margin-bottom: 6px;
+}
+.module-tag {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--metal-blue-light);
+  margin-bottom: 8px;
+}
+
+/* TWO-COLUMN LAYOUT */
+.two-col {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: 30px;
+}
+@media (max-width: 900px) {
+  .two-col {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* FOOTER */
 footer {
   text-align: center;
   padding: 40px;
-  color: #7df9ff;
-  border-top: 1px solid #00eaff;
-  margin-top: 60px;
+  color: var(--metal-blue-soft);
+  border-top: 1px solid var(--accent-neon);
+  margin-top: 40px;
+  background: rgba(0, 10, 25, 0.9);
+}
+
+/* SMALL LABELS */
+.label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--metal-blue-light);
+  margin-bottom: 6px;
 }
 </style>
 </head>
-<body>
+<body class="neon-mode">
 
-<div id="particles"></div>
+<div id="hex-grid"></div>
+<canvas id="particles"></canvas>
 
-<!-- NAVIGATION -->
+<!-- NAV -->
 <nav id="nav">
-  <div style="color:#7df9ff; font-size:20px; font-weight:bold;">Aetherforge</div>
+  <div class="nav-left">
+    <div class="logo-mark">Æ</div>
+    <div class="logo-text">Aetherforge</div>
+  </div>
   <div>
+    <a href="#hero">Home</a>
     <a href="#research">Research</a>
     <a href="#app">App</a>
     <a href="#teacher">Teacher</a>
     <a href="#simulations">Simulations</a>
     <a href="#contact">Contact</a>
+    <button class="toggle-btn" id="modeToggle">Dark / Neon</button>
   </div>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <h1>The AI Infrastructure Universe</h1>
-  <p>Build, explore, and govern intelligent systems across research, education, and simulation.</p>
+<div class="hero-wrap" id="hero">
+  <div class="hero" id="heroParallax">
+    <div class="hero-tagline">AI INFRASTRUCTURE • RESEARCH • EDUCATION • SIMULATION</div>
+    <h1>The AI Infrastructure Universe</h1>
+    <p>Design, explore, and govern intelligent systems across labs, classrooms, and simulated worlds — all from one modular universe.</p>
+    <div class="energy"></div>
+  </div>
 </div>
 
-<div class="energy"></div>
+<div class="main-wrap">
 
-<!-- SECTIONS -->
-<div id="research" class="section">
-  <h2>Research Platform</h2>
-  <p>Reproducible workflows, structured hypotheses, experiment lineage, model registry, and knowledge graphs.</p>
-</div>
+  <!-- OVERVIEW / MODULES -->
+  <div class="section-panel">
+    <div class="label">Universe Overview</div>
+    <h2>One universe. Multiple modules. Shared intelligence.</h2>
+    <p>Aetherforge is a modular AI infrastructure universe for research, education, and simulation. Each module is a self-contained system — but they all speak the same language of experiments, worlds, and governance.</p>
 
-<div id="app" class="section">
-  <h2>Free App</h2>
-  <p>Learn AI. Build worlds. Explore simulations.</p>
-</div>
+    <div class="module-grid">
+      <div class="module-card">
+        <div class="module-icon">R</div>
+        <div class="module-title">Research Platform</div>
+        <div class="module-tag">Labs & Institutes</div>
+        <p>Reproducible workflows, structured hypotheses, experiment lineage, model registry, and knowledge graphs for serious research.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">A</div>
+        <div class="module-title">Free App</div>
+        <div class="module-tag">Learners & Creators</div>
+        <p>Learn AI, build worlds, and explore simulations with guided flows and playful, safe experimentation.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">T</div>
+        <div class="module-title">Teacher Platform</div>
+        <div class="module-tag">Schools & Educators</div>
+        <p>Dashboards, analytics, assignments, and Teaching AI that supports real classrooms and real students.</p>
+      </div>
+      <div class="module-card">
+        <div class="module-icon">S</div>
+        <div class="module-title">Simulation Library</div>
+        <div class="module-tag">Systems & Worlds</div>
+        <p>Interactive simulations for research workflows, resource systems, governance models, and conceptual biology.</p>
+      </div>
+    </div>
+  </div>
 
-<div id="teacher" class="section">
-  <h2>Teacher Platform</h2>
-  <p>Dashboards, analytics, assignments, and Teaching AI for educators.</p>
-</div>
+  <!-- RESEARCH -->
+  <div class="section-panel" id="research">
+    <div class="two-col">
+      <div>
+        <div class="label">Module</div>
+        <h2>Research Platform</h2>
+        <p>Built for labs, institutes, and independent researchers who need structure without losing flexibility.</p>
+        <ul>
+          <li>Reproducible experiment workflows and pipelines</li>
+          <li>Structured hypotheses and experiment lineage</li>
+          <li>Model registry and dataset tracking</li>
+          <li>Knowledge graphs linking results, people, and tools</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">Use Cases</div>
+        <p>Track long-running projects, compare models, and keep a living memory of your research universe. Aetherforge turns scattered notebooks and scripts into a coherent, navigable system.</p>
+      </div>
+    </div>
+  </div>
 
-<div id="simulations" class="section">
-  <h2>Simulation Library</h2>
-  <p>Interactive simulations for research workflows, resource systems, governance models, and conceptual biology.</p>
-</div>
+  <!-- APP -->
+  <div class="section-panel" id="app">
+    <div class="two-col">
+      <div>
+        <div class="label">Module</div>
+        <h2>Free App</h2>
+        <p>A playful, guided interface for anyone curious about AI — from first-time explorers to advanced tinkerers.</p>
+        <ul>
+          <li>Guided AI journeys and interactive lessons</li>
+          <li>World-building and simulation sandboxes</li>
+          <li>Safe, constrained experimentation</li>
+          <li>Shareable creations and scenarios</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">For Learners & Creators</div>
+        <p>Use the Free App to explore ideas before they become full research projects or classroom modules. It’s the on-ramp into the Aetherforge universe.</p>
+      </div>
+    </div>
+  </div>
 
-<div id="contact" class="section">
-  <h2>Contact</h2>
-  <p>Email: aetherforge.modules@gmail.com</p>
+  <!-- TEACHER -->
+  <div class="section-panel" id="teacher">
+    <div class="two-col">
+      <div>
+        <div class="label">Module</div>
+        <h2>Teacher Platform</h2>
+        <p>Designed for educators who want AI in the classroom without losing control, safety, or clarity.</p>
+        <ul>
+          <li>Class and cohort dashboards</li>
+          <li>Assignments, rubrics, and AI-assisted feedback</li>
+          <li>Analytics on engagement and understanding</li>
+          <li>Safe, age-appropriate AI experiences</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">For Schools & Programs</div>
+        <p>Connect the Teacher Platform to the Free App and Simulation Library to create a full AI curriculum — from first contact to advanced projects.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SIMULATIONS -->
+  <div class="section-panel" id="simulations">
+    <div class="two-col">
+      <div>
+        <div class="label">Module</div>
+        <h2>Simulation Library</h2>
+        <p>A growing library of interactive systems: research workflows, resource economies, governance models, and conceptual biology.</p>
+        <ul>
+          <li>Configurable simulation templates</li>
+          <li>Scenario-based learning and experimentation</li>
+          <li>Visual dashboards and timelines</li>
+          <li>Hooks into research and teaching modules</li>
+        </ul>
+      </div>
+      <div>
+        <div class="label">For Systems Thinkers</div>
+        <p>Use simulations to test ideas before deploying them in the real world — or to teach complex systems in a way that feels tangible and alive.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="section-panel" id="contact">
+    <div class="two-col">
+      <div>
+        <div class="label">Contact</div>
+        <h2>Connect with Aetherforge</h2>
+        <p>Whether you’re a lab, a school, a creator, or a partner, Aetherforge is designed to plug into your world.</p>
+        <p><strong>Email:</strong> aetherforge.modules@gmail.com</p>
+      </div>
+      <div>
+        <div class="label">Roadmap</div>
+        <p>Public launch of the Free App, Research Platform MVP, Teacher Platform, and Simulation Library will roll out in stages — all under one coherent universe.</p>
+      </div>
+    </div>
+  </div>
+
 </div>
 
 <footer>
@@ -180,16 +446,37 @@ window.addEventListener('scroll', () => {
   else nav.classList.remove('scrolled');
 });
 
-/* Simple particle generator */
-const canvas = document.createElement('canvas');
-canvas.style.position = 'fixed';
-canvas.style.top = 0;
-canvas.style.left = 0;
-canvas.style.width = '100%';
-canvas.style.height = '100%';
-canvas.style.zIndex = -1;
-document.body.appendChild(canvas);
+/* Dark / Neon toggle */
+const toggle = document.getElementById('modeToggle');
+toggle.addEventListener('click', () => {
+  document.body.classList.toggle('neon-mode');
+});
 
+/* Parallax hero */
+const hero = document.getElementById('heroParallax');
+window.addEventListener('mousemove', (e) => {
+  const x = (window.innerWidth / 2 - e.clientX) / 60;
+  const y = (window.innerHeight / 2 - e.clientY) / 60;
+  hero.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+});
+
+/* Hex grid background (simple animated gradient lines) */
+const hexGrid = document.getElementById('hex-grid');
+let hexOffset = 0;
+function animateHex() {
+  hexOffset += 0.2;
+  hexGrid.style.backgroundImage =
+    `linear-gradient(120deg, rgba(77,166,255,0.12) 1px, transparent 1px),
+     linear-gradient(60deg, rgba(77,166,255,0.12) 1px, transparent 1px),
+     radial-gradient(circle at top, #0a1025 0%, #05060a 55%, #020308 100%)`;
+  hexGrid.style.backgroundSize = '40px 70px, 40px 70px, cover';
+  hexGrid.style.backgroundPosition = `${hexOffset}px ${hexOffset}px, ${-hexOffset}px ${-hexOffset}px, center`;
+  requestAnimationFrame(animateHex);
+}
+animateHex();
+
+/* Particle layer */
+const canvas = document.getElementById('particles');
 const ctx = canvas.getContext('2d');
 let particles = [];
 
@@ -198,7 +485,7 @@ function resize() {
   canvas.height = window.innerHeight;
 }
 resize();
-window.onresize = resize;
+window.addEventListener('resize', resize);
 
 for (let i = 0; i < 80; i++) {
   particles.push({
@@ -210,9 +497,9 @@ for (let i = 0; i < 80; i++) {
   });
 }
 
-function animate() {
+function animateParticles() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  ctx.fillStyle = '#00eaff55';
+  ctx.fillStyle = '#4da6ff55';
   particles.forEach(p => {
     ctx.beginPath();
     ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
@@ -222,9 +509,9 @@ function animate() {
     if (p.x < 0 || p.x > canvas.width) p.dx *= -1;
     if (p.y < 0 || p.y > canvas.height) p.dy *= -1;
   });
-  requestAnimationFrame(animate);
+  requestAnimationFrame(animateParticles);
 }
-animate();
+animateParticles();
 </script>
 
 </body>
